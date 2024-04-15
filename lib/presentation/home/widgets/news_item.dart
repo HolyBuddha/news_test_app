@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_test_app/common/app_colors.dart';
+import 'package:news_test_app/core/app_colors.dart';
+import 'package:news_test_app/core/extensions/date_time_extension.dart';
 import 'package:news_test_app/domain/model/article.dart';
 import 'package:news_test_app/presentation/article/article_screen.dart';
 import 'package:news_test_app/presentation/home/bloc/home_bloc.dart';
@@ -13,27 +13,29 @@ class NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeBloc = context.read<HomeBloc>();
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
           color: article.readed ? AppColors.gray : AppColors.white,
-          boxShadow: const [
-            BoxShadow(
+          boxShadow: [
+            const BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 20.0,
               spreadRadius: 0.0,
               offset: Offset(4, 4),
             ),
-            BoxShadow(
-              color: Color.fromRGBO(255, 255, 255, 1),
-              blurRadius: 8.0,
-              spreadRadius: 0.0,
-              offset: Offset(-4, -4),
-            ),
+            if (!article.readed)
+              const BoxShadow(
+                color: Color.fromRGBO(255, 255, 255, 1),
+                blurRadius: 8.0,
+                spreadRadius: 0.0,
+                offset: Offset(-4, -4),
+              ),
           ],
           borderRadius: BorderRadius.circular(9),
         ),
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         padding:
             const EdgeInsets.only(left: 20, right: 35, top: 20, bottom: 20),
         child: Row(
@@ -56,11 +58,13 @@ class NewsItem extends StatelessWidget {
                     article.title,
                     maxLines: 2,
                     style: const TextStyle(
-                        fontSize: 16, color: AppColors.bodyText),
+                        fontSize: 16,
+                        color: AppColors.bodyText,
+                        overflow: TextOverflow.ellipsis),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    article.publicationDate.toString(),
+                    article.publicationDate.showDaysAgo(),
                     style: const TextStyle(
                         fontSize: 12, color: AppColors.secondaryText),
                   ),
@@ -71,7 +75,7 @@ class NewsItem extends StatelessWidget {
         ),
       ),
       onTap: () {
-        context.read<HomeBloc>().add(HomeMarkArticleById(article.id));
+        homeBloc.add(HomeMarkArticleById(article.id));
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:news_test_app/common/app_colors.dart';
+import 'package:news_test_app/core/app_colors.dart';
 import 'package:news_test_app/domain/model/article.dart';
 
 class ArticleScreen extends StatelessWidget {
@@ -15,7 +15,6 @@ class ArticleScreen extends StatelessWidget {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Stack(
               children: [
@@ -23,7 +22,7 @@ class ArticleScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   child: CachedNetworkImage(
                     imageUrl: article.imageUrl,
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
                   ),
@@ -55,12 +54,16 @@ class ArticleScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                article.description ?? '',
-                style: const TextStyle(
-                  fontSize: 16,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    article.description ?? '',
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ),

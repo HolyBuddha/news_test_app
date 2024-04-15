@@ -10,10 +10,6 @@ sealed class HomeEvent extends Equatable {
 
 final class HomeInitialing extends HomeEvent {}
 
-final class HomeChangePage extends HomeEvent {
-  final int page;
-  const HomeChangePage(this.page);
-}
 
 final class HomeMarkArticleById extends HomeEvent {
   final String id;
@@ -21,3 +17,8 @@ final class HomeMarkArticleById extends HomeEvent {
 }
 
 final class HomeMarkAllArticles extends HomeEvent {}
+
+final class HomeChangePage extends HomeEvent {
+  final int page;
+  const HomeChangePage(this.page);
+}

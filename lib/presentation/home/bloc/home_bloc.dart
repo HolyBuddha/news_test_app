@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final NewsRepository repository;
   List<Article> featuredArticles = [];
   List<Article> latestArticles = [];
-  int page = 0;
+  int featuredArticlesPage = 0;
 
   HomeBloc(this.repository) : super(HomeInitial()) {
     on<HomeInitialing>((event, emit) async {
@@ -41,5 +41,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeLoading());
       emit(HomeLoaded());
     });
+    on<HomeChangePage>(((event, emit) {
+      featuredArticlesPage = event.page;
+      emit(HomeLoading());
+      emit(HomeLoaded());
+    }));
   }
 }

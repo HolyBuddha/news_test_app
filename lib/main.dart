@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_test_app/common/app_colors.dart';
+import 'package:news_test_app/core/app_colors.dart';
 import 'package:news_test_app/presentation/home/bloc/home_bloc.dart';
 import 'package:news_test_app/presentation/home/home_screen.dart';
 import 'package:news_test_app/service_locator.dart';
@@ -20,8 +20,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'News Test App',
       theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.mainBackground,
-          fontFamily: "SFPro",),
+        scaffoldBackgroundColor: AppColors.mainBackground,
+        fontFamily: "SFPro",
+      ),
       home: BlocProvider(
         create: ((context) => sl<HomeBloc>()),
         child: const HomeScreen(),
